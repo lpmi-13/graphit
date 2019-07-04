@@ -1,6 +1,7 @@
 var canvas = document.querySelector('canvas');
 var context = canvas.getContext('2d');
 
+
 canvas.setAttribute('width', window.innerWidth);
 canvas.setAttribute('height', window.innerHeight);
 
@@ -53,16 +54,16 @@ function paint(e) {
 
 function getSlope(startX, startY, endX, endY) {
   var slope = (startY - endY) / (endX - startX);
-  console.log('starting X is', startX);
-  console.log('starting Y is', startY);
-  console.log('final X is', endX);
-  console.log('final Y is', endY);
-  console.log('the slope is ', slope.toFixed(2));
+  return slope.toFixed(2);
 }
 
 function exit() {
   isPainting = false;
-  getSlope(origX, origY, finalX, finalY);
+  var slope = getSlope(origX, origY, finalX, finalY);
+  context.font = "5rem Arial";
+  context.textAlign = 'center';
+  var equation = 'y = ' + slope + 'x + b';
+  context.fillText(equation, canvas.width/2, canvas.height * .85);
 }
 
 function clearAll() {
