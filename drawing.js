@@ -60,9 +60,31 @@ function getSlope(startX, startY, endX, endY) {
 function exit() {
   isPainting = false;
   var slope = getSlope(origX, origY, finalX, finalY);
+//  console.log('slope is: ', slope);
+  console.log('origX is: ', origX);
+  console.log('origY is: ', origY);
+//  console.log('original points create: ' + origY + ' = ' + slope + ' * ' + origX + ' + b');
+//  console.log('finalX is: ', finalX);
+//  console.log('finalY is: ', finalY);
+//  console.log('final points create: ' + finalY + ' = ' + slope + ' * ' + finalX + ' + b');
+  var fakeCenterX = canvas.width/2;
+  console.log('fakeCenterX is: ', fakeCenterX);
+  var fakeOrigX = origX - fakeCenterX;
+  var fakeCenterY = canvas.height/2;
+  console.log('fakeCenterY is: ', fakeCenterY);
+  var fakeOrigY = fakeCenterY - origY;
+  console.log('fake original X is: ', fakeOrigX);
+  console.log('fake original Y is: ', fakeOrigY);
   context.font = "5rem Arial";
   context.textAlign = 'center';
-  var equation = 'y = ' + slope + 'x + b';
+  var midpoint = canvas.width/2;
+  // this is the first part...now just need to deal with the reverse Y vals
+  var firstPart = slope * fakeOrigX;
+
+  // this _should_ work, but shit is reversed
+  var yPoint = fakeCenterY - firstPart;
+  var symbol = yPoint > 0 ? '+' : '-';
+  var equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(yPoint.toFixed(0));
   context.fillText(equation, canvas.width/2, canvas.height * .85);
 }
 
