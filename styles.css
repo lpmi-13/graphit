@@ -1,6 +1,7 @@
 html,
 body,
 canvas {
+  position: absolute;
   height: 100%,
   width: 100%,
   margin: 0,
@@ -11,9 +12,64 @@ body {
   overflow: hidden;
 }
 
-canvas {
-  background-image: url('graph.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(19, auto);
+  grid-gap: 0;
+  user-select: none;
+  z-index: -1;
+}
+
+.square {
+  width: 5vw;
+  height: 4.75vh;
+  border: 1px solid black;
+}
+
+.quadrant-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  user-select: none;
+  z-index: -2;
+}
+
+.quadrant1 {
+  width: 50vw;
+  height: 50vh;
+  border-style: solid;
+  border-color: red;
+  border: 0 5px 5px 0; 
+}
+
+.quadrant2 {
+  width: 50vw;
+  height: 50vh;
+  border-style: solid;
+  border-color: red;
+  border: 0 0 5px 5px; 
+}
+
+.quadrant3 {
+  width: 50vw;
+  height: 50vh;
+  border-style: solid;
+  border-color: red;
+  border: 5px 5px 0 0; 
+}
+
+.quadrant4 {
+  width: 50vw;
+  height: 50vh;
+  border-style: solid;
+  border-color: red;
+  border: 5px 0 0 5px; 
 }
