@@ -26,8 +26,15 @@ gulp.task('html', done => {
   done();
 });
 
+gulp.task('copy assets', done => {
+  gulp.src(['styles.css', 'graph.png'])
+    .pipe(gulp.dest('dist/'))
+  done();
+});
+
 gulp.task('default', gulp.parallel(
   'miniJS',
   'html',
+  'copy assets',
   )
 );
