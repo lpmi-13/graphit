@@ -1,0 +1,35 @@
+{
+  "name": "graphit",
+  "version": "1.0.0",
+  "description": "an application to show equations based on lines drawn",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3.6 -m http.server",
+    "build": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpmi-13/graphit.git"
+  },
+  "keywords": [
+    "math",
+    "micromaterial"
+  ],
+  "author": "Adam Leskis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lpmi-13/graphit/issues"
+  },
+  "homepage": "https://github.com/lpmi-13/graphit#readme",
+  "dependencies": {
+    "gulp": "^4.0.2"
+  },
+  "devDependencies": {
+    "gulp-inject-string": "^1.1.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-terser": "^1.2.0",
+    "gulp-uglify": "^3.0.2"
+  }
+}
