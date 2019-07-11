@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "python3.6 -m http.server",
-    "build": "gulp",
+    "build": "rm dist -rf && gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

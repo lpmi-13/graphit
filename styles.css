@@ -12,8 +12,9 @@ body {
 }
 
 canvas {
-  background-image: url('graph.png');
+  background-image: url('background-graph.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
+  letter-spacing: .3rem;
 }

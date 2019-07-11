@@ -27,7 +27,7 @@ gulp.task('html', done => {
 });
 
 gulp.task('copy assets', done => {
-  gulp.src(['styles.css', 'graph.png'])
+  gulp.src(['styles.css', 'background-graph.png'])
     .pipe(gulp.dest('dist/'))
   done();
 });

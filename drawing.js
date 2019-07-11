@@ -1,3 +1,9 @@
+var noScroll = document.querySelector('body');
+noScroll.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+}, {passive: false });
+
+
 var canvas = document.querySelector('canvas');
 var context = canvas.getContext('2d');
 
@@ -29,13 +35,11 @@ function startPaint(e) {
 
 function drawLine(firstX, firstY, secondX, secondY) {
   context.strokeStyle = "black";
-  context.lineJoin = "round";
-  context.lineWidth = 5;
+  context.lineWidth = 12;
 
   context.beginPath();
   context.moveTo(secondX, secondY);
   context.lineTo(firstX, firstY);
-  context.closePath();
 
   // actually draw the path
   context.stroke();
@@ -60,34 +64,31 @@ function getSlope(startX, startY, endX, endY) {
 function exit() {
   isPainting = false;
   var slope = getSlope(origX, origY, finalX, finalY);
-//  console.log('slope is: ', slope);
-  console.log('origX is: ', origX);
-  console.log('origY is: ', origY);
-//  console.log('original points create: ' + origY + ' = ' + slope + ' * ' + origX + ' + b');
-//  console.log('finalX is: ', finalX);
-//  console.log('finalY is: ', finalY);
-//  console.log('final points create: ' + finalY + ' = ' + slope + ' * ' + finalX + ' + b');
+
+  // deal with 0, 0 being at the top left of the viewport
   var fakeCenterX = canvas.width/2;
-  console.log('fakeCenterX is: ', fakeCenterX);
   var fakeOrigX = origX - fakeCenterX;
   var fakeCenterY = canvas.height/2;
-  console.log('fakeCenterY is: ', fakeCenterY);
   var fakeOrigY = fakeCenterY - origY;
-  console.log('fake original X is: ', fakeOrigX);
-  console.log('fake original Y is: ', fakeOrigY);
-  context.font = "5rem Arial";
-  context.textAlign = 'center';
-  var midpoint = canvas.width/2;
-  // this is the first part...now just need to deal with the reverse Y vals
-  var firstPart = slope * fakeOrigX;
 
-  // this _should_ work, but shit is reversed
-  var yPoint = fakeCenterY - firstPart;
+  // we have 9 "units" each above/below the midpoint, so a bit hacky
+  var heightUnit = canvas.height / 18;
+
+  context.font = "3.8rem Arial";
+  context.strokeStyle = '#000000';
+  context.textAlign = 'center';
+
+  // put the equation together
+  var yPoint = fakeOrigY - (slope * fakeOrigX);
+  var scaledYPoint = yPoint / heightUnit;
+
   var symbol = yPoint > 0 ? '+' : '-';
-  var equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(yPoint.toFixed(0));
-  context.fillText(equation, canvas.width/2, canvas.height * .85);
+  var equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));
+  context.lineWidth = 4;
+  context.strokeText(equation, canvas.width / 2, canvas.height * .85);
 }
 
+// get rid of the previous line drawn and equation generated
 function clearAll() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
