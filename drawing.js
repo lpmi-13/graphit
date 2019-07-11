@@ -35,7 +35,7 @@ function startPaint(e) {
 
 function drawLine(firstX, firstY, secondX, secondY) {
   context.strokeStyle = "black";
-  context.lineWidth = 12;
+  context.lineWidth = 10;
 
   context.beginPath();
   context.moveTo(secondX, secondY);
@@ -74,7 +74,7 @@ function exit() {
   // we have 9 "units" each above/below the midpoint, so a bit hacky
   var heightUnit = canvas.height / 18;
 
-  context.font = "3.8rem Arial";
+  context.font = "2.8rem Arial";
   context.strokeStyle = '#000000';
   context.textAlign = 'center';
 
