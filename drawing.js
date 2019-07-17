@@ -7,6 +7,8 @@ noScroll.addEventListener('touchmove', function(e) {
 var canvas = document.querySelector('canvas');
 var context = canvas.getContext('2d');
 
+var fontRatio = 80 / 1000;
+var fontSize = window.innerWidth * fontRatio;
 
 canvas.setAttribute('width', window.innerWidth);
 canvas.setAttribute('height', window.innerHeight);
@@ -74,7 +76,7 @@ function exit() {
   // we have 9 "units" each above/below the midpoint, so a bit hacky
   var heightUnit = canvas.height / 18;
 
-  context.font = "2.8rem Arial";
+  context.font = fontSize + "px Arial";
   context.strokeStyle = '#000000';
   context.textAlign = 'center';
 
@@ -85,7 +87,7 @@ function exit() {
   var symbol = yPoint > 0 ? '+' : '-';
   var equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));
   context.lineWidth = 4;
-  context.strokeText(equation, canvas.width / 2, canvas.height * .85);
+  context.fillText(equation, canvas.width / 2, canvas.height * .85);
 }
 
 // get rid of the previous line drawn and equation generated
