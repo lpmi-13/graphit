@@ -35,6 +35,15 @@ function startPaint(e) {
   origY = y = coordinates[1];
 }
 
+function snapToLinear() {
+  // get rid of the previously drawn line and snap line to equation
+  clearAll();
+  context.beginPath();
+  context.moveTo(origX, origY);
+  context.lineTo(finalX, finalY);
+  context.stroke();
+}
+
 function drawLine(firstX, firstY, secondX, secondY) {
   context.strokeStyle = "black";
   context.lineWidth = 10;
@@ -83,6 +92,13 @@ function exit() {
   // put the equation together
   var yPoint = fakeOrigY - (slope * fakeOrigX);
   var scaledYPoint = yPoint / heightUnit;
+
+
+  // draw out the linear line from equation
+  var linearSelection = document.getElementById('linear').checked;
+  if(linearSelection) {
+    snapToLinear();
+  }
 
   var symbol = yPoint > 0 ? '+' : '-';
   var equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));
