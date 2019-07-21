@@ -3,12 +3,20 @@ noScroll.addEventListener('touchmove', function(e) {
   e.preventDefault();
 }, {passive: false });
 
+console.log(regression.prototype)
+
+var blah = new regression();
+var result = blah.linear([[0, 1], [32, 67], [12, 79]]);
+console.log(result);
+
 
 var canvas = document.querySelector('canvas');
 var context = canvas.getContext('2d');
 
 var fontRatio = 80 / 1000;
 var fontSize = window.innerWidth * fontRatio;
+
+var coordinateArray = [];
 
 canvas.setAttribute('width', window.innerWidth);
 canvas.setAttribute('height', window.innerHeight);
@@ -30,6 +38,7 @@ function getCoordinates(event) {
 
 function startPaint(e) {
   isPainting = true;
+  coordinateArray = [];
   var coordinates = getCoordinates(e);
   origX = x = coordinates[0];
   origY = y = coordinates[1];
@@ -61,6 +70,12 @@ function paint(e) {
     var [newX, newY] = getCoordinates(e);
     drawLine(x, y, newX, newY);
 
+    // save these for later
+    coordinateArray.push({
+      'x':newX,
+      'y':newY
+    });
+
     // set x and y to our new coordinates
     finalX = x = newX;
     finalY = y = newY;
@@ -73,8 +88,11 @@ function getSlope(startX, startY, endX, endY) {
 }
 
 function exit() {
+
   isPainting = false;
   var slope = getSlope(origX, origY, finalX, finalY);
+
+  console.log(coordinateArray);
 
   // deal with 0, 0 being at the top left of the viewport
   var fakeCenterX = canvas.width/2;

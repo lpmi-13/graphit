@@ -1,12 +1,14 @@
 const gulp = require('gulp');
+const concat = require('gulp-concat');
 const inject = require('gulp-inject-string');
 const terser= require('gulp-terser');
 const rename = require('gulp-rename');
 const stripDebug = require('gulp-strip-debug');
 
 gulp.task('miniJS', done => {
-  gulp.src('./drawing.js')
+  gulp.src('./*.js')
     // replace file paths for assets
+    .pipe(concat('bundle.js'))
     .pipe(stripDebug())
     .pipe(terser({
       mangle: true
