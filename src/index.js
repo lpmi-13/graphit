@@ -1,22 +1,21 @@
-var noScroll = document.querySelector('body');
+import regression from 'regression';
+
+const noScroll = document.querySelector('body');
 noScroll.addEventListener('touchmove', function(e) {
   e.preventDefault();
 }, {passive: false });
 
-console.log(regression.prototype)
-
-var blah = new regression();
-var result = blah.linear([[0, 1], [32, 67], [12, 79]]);
+const result = regression.linear([[0, 1], [32, 67], [12, 79]]);
 console.log(result);
 
 
-var canvas = document.querySelector('canvas');
-var context = canvas.getContext('2d');
+const canvas = document.querySelector('canvas');
+const context = canvas.getContext('2d');
 
-var fontRatio = 80 / 1000;
-var fontSize = window.innerWidth * fontRatio;
+const fontRatio = 80 / 1000;
+const fontSize = window.innerWidth * fontRatio;
 
-var coordinateArray = [];
+const coordinateArray = [];
 
 canvas.setAttribute('width', window.innerWidth);
 canvas.setAttribute('height', window.innerHeight);
@@ -39,7 +38,7 @@ function getCoordinates(event) {
 function startPaint(e) {
   isPainting = true;
   coordinateArray = [];
-  var coordinates = getCoordinates(e);
+  const coordinates = getCoordinates(e);
   origX = x = coordinates[0];
   origY = y = coordinates[1];
 }
@@ -83,43 +82,43 @@ function paint(e) {
 }
 
 function getSlope(startX, startY, endX, endY) {
-  var slope = (startY - endY) / (endX - startX);
+  const slope = (startY - endY) / (endX - startX);
   return slope.toFixed(2);
 }
 
 function exit() {
 
   isPainting = false;
-  var slope = getSlope(origX, origY, finalX, finalY);
+  const slope = getSlope(origX, origY, finalX, finalY);
 
   console.log(coordinateArray);
 
   // deal with 0, 0 being at the top left of the viewport
-  var fakeCenterX = canvas.width/2;
-  var fakeOrigX = origX - fakeCenterX;
-  var fakeCenterY = canvas.height/2;
-  var fakeOrigY = fakeCenterY - origY;
+  const fakeCenterX = canvas.width/2;
+  const fakeOrigX = origX - fakeCenterX;
+  const fakeCenterY = canvas.height/2;
+  const fakeOrigY = fakeCenterY - origY;
 
   // we have 9 "units" each above/below the midpoint, so a bit hacky
-  var heightUnit = canvas.height / 18;
+  const heightUnit = canvas.height / 18;
 
   context.font = fontSize + "px Arial";
   context.strokeStyle = '#000000';
   context.textAlign = 'center';
 
   // put the equation together
-  var yPoint = fakeOrigY - (slope * fakeOrigX);
-  var scaledYPoint = yPoint / heightUnit;
+  const yPoint = fakeOrigY - (slope * fakeOrigX);
+  const scaledYPoint = yPoint / heightUnit;
 
 
   // draw out the linear line from equation
-  var linearSelection = document.getElementById('linear').checked;
+  const linearSelection = document.getElementById('linear').checked;
   if(linearSelection) {
     snapToLinear();
   }
 
-  var symbol = yPoint > 0 ? '+' : '-';
-  var equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));
+  const symbol = yPoint > 0 ? '+' : '-';
+  const equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));
   context.lineWidth = 4;
   context.fillText(equation, canvas.width / 2, canvas.height * .85);
 }
