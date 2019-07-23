@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   devtool: "#eval-source-map",
@@ -26,17 +27,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.(png|jpg|gif)$/,
         use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 5000
-            }
-          }
+          "file-loader"
         ]
       }
     ]
@@ -58,6 +54,10 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./index.html"
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
     }),
   ]
 };
