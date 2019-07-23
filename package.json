@@ -4,8 +4,8 @@
   "description": "an application to show equations based on lines drawn",
   "main": "index.html",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.dev.js --mode development --hot",
-    "build": "NODE_ENV=production rm dist -rf && webpack --config webpack.prod.js",
+    "start": "NODE_ENV=development webpack-dev-server --config webpack.dev.js --hot",
+    "build": "rm dist -rf && NODE_ENV=production webpack --config webpack.prod.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "url-loader": "^2.1.0",
     "webpack": "^4.36.1",
     "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.1"
   }
 }

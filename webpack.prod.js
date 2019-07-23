@@ -1,38 +1,25 @@
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const baseConfig = require("./webpack.base.js");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = {
-  entry: "./src/index.js",
+module.exports = merge(baseConfig, {
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "bundle.js"
-  },
-  devServer: {
-    stats: {
-      children: false,
-      maxModules: 0
-    }
+    filename: "bundle.js",
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
-      },
-      {
         test: /\.(png|jpg|gif)$/,
-        loader: "url-loader"
-      }
-    ]
+        use: [
+          "file-loader?=name=[name].[ext]",
+        ],
+      },
+    ],
   },
   optimization: {
     minimizer: [
@@ -42,19 +29,18 @@ module.exports = {
         uglifyOptions: {
           compress: false,
           ecma: 6,
-          mangle: true
+          mangle: true,
         },
-        sourceMap: true
-      })
-    ]
+        sourceMap: true,
+      }),
+    ],
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: "./index.html"
+    new webpack.EnvironmentPlugin([
+      "NODE_ENV",
+    ]),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
     }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    }),
-  ]
-};
+  ],
+});

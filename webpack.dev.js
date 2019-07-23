@@ -1,63 +1,12 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const merge = require("webpack-merge");
+const baseConfig = require("./webpack.base.js");
 
-module.exports = {
+module.exports = merge(baseConfig, {
   devtool: "#eval-source-map",
-  entry: "./src/index.js",
-  output: {
-    path: path.join(__dirname, "/dist"),
-    filename: "bundle.js"
-  },
   devServer: {
     stats: {
       children: false,
-      maxModules: 0
-    }
+      maxModules: 0,
+    },
   },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"]
-      },
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          "file-loader"
-        ]
-      }
-    ]
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: false,
-          ecma: 6,
-          mangle: true
-        },
-        sourceMap: true
-      })
-    ]
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./index.html"
-    }),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
-    }),
-  ]
-};
+});
