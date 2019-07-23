@@ -1,13 +1,7 @@
-import regression from 'regression';
-
 const noScroll = document.querySelector('body');
 noScroll.addEventListener('touchmove', function(e) {
   e.preventDefault();
 }, {passive: false });
-
-const result = regression.linear([[0, 1], [32, 67], [12, 79]]);
-console.log(result);
-
 
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
@@ -15,14 +9,16 @@ const context = canvas.getContext('2d');
 const fontRatio = 80 / 1000;
 const fontSize = window.innerWidth * fontRatio;
 
-const coordinateArray = [];
-
 canvas.setAttribute('width', window.innerWidth);
 canvas.setAttribute('height', window.innerHeight);
 
-
-var x, y, isPainting;
-var origX, origY, finalX, finalY;
+let x,
+    y,
+    isPainting,
+    origX,
+    origY,
+    finalX,
+    finalY;
 
 function getCoordinates(event) {
   if (['mousedown', 'mousemove'].includes(event.type)) {
@@ -37,7 +33,6 @@ function getCoordinates(event) {
 
 function startPaint(e) {
   isPainting = true;
-  coordinateArray = [];
   const coordinates = getCoordinates(e);
   origX = x = coordinates[0];
   origY = y = coordinates[1];
@@ -69,12 +64,6 @@ function paint(e) {
     var [newX, newY] = getCoordinates(e);
     drawLine(x, y, newX, newY);
 
-    // save these for later
-    coordinateArray.push({
-      'x':newX,
-      'y':newY
-    });
-
     // set x and y to our new coordinates
     finalX = x = newX;
     finalY = y = newY;
@@ -90,8 +79,6 @@ function exit() {
 
   isPainting = false;
   const slope = getSlope(origX, origY, finalX, finalY);
-
-  console.log(coordinateArray);
 
   // deal with 0, 0 being at the top left of the viewport
   const fakeCenterX = canvas.width/2;
@@ -112,10 +99,7 @@ function exit() {
 
 
   // draw out the linear line from equation
-  const linearSelection = document.getElementById('linear').checked;
-  if(linearSelection) {
-    snapToLinear();
-  }
+  snapToLinear();
 
   const symbol = yPoint > 0 ? '+' : '-';
   const equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));

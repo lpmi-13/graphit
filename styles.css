@@ -16,12 +16,3 @@ canvas {
   letter-spacing: .2rem;
   -webkit-text-size-adjust: 100%;
 }
-
-.select-lines {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  left: 40px;
-  z-index: 20;
-  font-size: 2em;
-}
