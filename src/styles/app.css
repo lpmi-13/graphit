@@ -1,15 +1,15 @@
 html,
 body,
 canvas {
-  height: 100%,
-  width: 100%,
-  margin: 0,
+  height: 100%;
+  width: 100%;
+  margin: 0;
   user-select: none;
   overflow: hidden;
 }
 
 canvas {
-  background-image: url('background-graph.png');
+  background-image: url('/src/images/background-graph.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
