@@ -24,14 +24,14 @@ module.exports = {
           },
         }],
       },
-//      {
-//        test: /\.scss$/,
-//        use: [
-//          process.env.NODE_ENV !== 'production' ? "style-loader" : MiniCssExtractPlugin.loader,
-//          "css-loader",
-//          "sass-loader",
-//        ],
-//      },
+      {
+        test: /\.scss$/,
+        use: [
+          process.env.NODE_ENV !== 'production' ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader",
+        ],
+      },
     ],
   },
   plugins: [

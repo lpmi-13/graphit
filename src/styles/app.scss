@@ -8,8 +8,16 @@ canvas {
   overflow: hidden;
 }
 
+span {
+  position: absolute;
+  user-select: none;
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+}
+
 canvas {
-  background-image: url('../images/background-graph.png');
+  background-image: url('../images/background-graph.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;

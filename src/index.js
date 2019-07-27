@@ -8,7 +8,7 @@ noScroll.addEventListener('touchmove', function(e) {
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-const fontRatio = 80 / 1000;
+const fontRatio = 90 / 1000;
 const fontSize = window.innerWidth * fontRatio;
 
 canvas.setAttribute('width', window.innerWidth);
