@@ -15,10 +15,6 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
-      {
         test: /\.(png|jp(e*)g|svg)$/,
         use: [{
           loader: "url-loader",
@@ -28,6 +24,14 @@ module.exports = {
           },
         }],
       },
+//      {
+//        test: /\.scss$/,
+//        use: [
+//          process.env.NODE_ENV !== 'production' ? "style-loader" : MiniCssExtractPlugin.loader,
+//          "css-loader",
+//          "sass-loader",
+//        ],
+//      },
     ],
   },
   plugins: [

@@ -1,4 +1,4 @@
-import style from './styles/app.css';
+import style from './styles/app.scss';
 
 const noScroll = document.querySelector('body');
 noScroll.addEventListener('touchmove', function(e) {
