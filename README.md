@@ -1,5 +1,7 @@
 # Graphit
 
+![](equation.gif)
+
 Current hosted at https://mathbuffet.party
 
 this is based on the excellent [tutorial](https://dev.to/aspittel/how-to-create-the-drawing-interaction-on-dev-s-offline-page-1mbe) by Ali Spittel, and uses the same technique to generate a slope equation from a drawn line.
