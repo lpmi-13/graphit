@@ -37,7 +37,7 @@ function resize() {
   context.resetTransform()
   context.translate(canvas.width/2, canvas.height/2);
   const scale = canvas.width / 20 /* 20 units on width of page */
-  context.scale(scale,scale);
+  context.scale(scale, -scale);
   context.lineWidth = 0.25
   context.lineCap = 'round'
 }
@@ -59,12 +59,12 @@ function getCoordinates(event) {
   if (['mousedown', 'mousemove'].includes(event.type)) {
     return [
       (((event.pageX - bounds.left) / bounds.width) - .5) * 20,
-      (((event.pageY - bounds.top) / bounds.height) - .5) * 20,
+      -(((event.pageY - bounds.top) / bounds.height) - .5) * 20,
     ];
   } else {
     return [
       (((event.touches[0].pageX - bounds.left) / bounds.width) - .5) * 20,
-      (((event.touches[0].pageY - bounds.top) / bounds.height) - .5) * 20,
+      -(((event.touches[0].pageY - bounds.top) / bounds.height) - .5) * 20,
     ];
   }
 }
@@ -118,7 +118,7 @@ function exit() {
   const slope = getSlope(origX, origY, finalX, finalY);
 
   // put the equation together
-  const yPoint = (origY + (slope * origX)) * -1;
+  const yPoint = (origY + (slope * origX));
 
   // draw out the linear line from equation
   snapToLinear();
