@@ -12,7 +12,7 @@ function resize() {
   // size the canvas to be a square that
   // will fit in the middle of the page
   const {innerWidth, innerHeight} = window
-  const size = Math.min(innerWidth, innerHeight) * 0.8
+  const size = Math.min(innerWidth, innerHeight) * 0.8 // 0.8 = 10% padding
   const top = ((innerHeight - size) / 2)
   const left = ((innerWidth - size) / 2)
 
