@@ -17,9 +17,9 @@ span {
 }
 
 canvas {
-  background-image: url('background-graph.jpg');
+  background-image: url('../images/background-graph.svg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: 50% 50%;
   letter-spacing: .2rem;
   -webkit-text-size-adjust: 100%;
