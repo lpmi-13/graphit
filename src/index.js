@@ -8,11 +8,42 @@ noScroll.addEventListener('touchmove', function(e) {
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
-const fontRatio = 90 / 1000;
-const fontSize = window.innerWidth * fontRatio;
+function resize() {
+  // size the canvas to be a square that
+  // will fit in the middle of the page
+  const {innerWidth, innerHeight} = window
+  const size = Math.min(innerWidth, innerHeight) * 0.8
+  const top = ((innerHeight - size) / 2)
+  const left = ((innerWidth - size) / 2)
 
-canvas.setAttribute('width', window.innerWidth);
-canvas.setAttribute('height', window.innerHeight);
+  // for retina screens, make the canvas bigger
+  // and scale down with css so it's crisper
+  const pixelRatio = window.devicePixelRatio || 1; 
+  canvas.width = size * pixelRatio
+  canvas.height = size * pixelRatio
+
+  const style = {
+    position: 'absolute',
+    top: top + 'px',
+    left: left + 'px',
+    width: size + 'px',
+    height: size + 'px',
+  }
+
+  Object.assign(canvas.style, style)
+
+  // transform the context, so drawing to 0,0 will be in the centre
+  // and the pixels will match the background
+  context.resetTransform()
+  context.translate(canvas.width/2, canvas.height/2);
+  const scale = canvas.width / 20 /* 20 units on width of page */
+  context.scale(scale,scale);
+  context.lineWidth = 0.25
+  context.lineCap = 'round'
+}
+
+window.addEventListener("resize", resize);
+resize();
 
 let x,
     y,
@@ -23,12 +54,17 @@ let x,
     finalY;
 
 function getCoordinates(event) {
+  const bounds = canvas.getBoundingClientRect()
+
   if (['mousedown', 'mousemove'].includes(event.type)) {
-    return [event.pageX - canvas.offsetLeft, event.pageY - canvas.offsetTop];
+    return [
+      (((event.pageX - bounds.left) / bounds.width) - .5) * 20,
+      (((event.pageY - bounds.top) / bounds.height) - .5) * 20,
+    ];
   } else {
     return [
-      event.touches[0].pageX - canvas.offsetLeft,
-      event.touches[0].pageY - canvas.offsetTop
+      (((event.touches[0].pageX - bounds.left) / bounds.width) - .5) * 20,
+      (((event.touches[0].pageY - bounds.top) / bounds.height) - .5) * 20,
     ];
   }
 }
@@ -51,7 +87,6 @@ function snapToLinear() {
 
 function drawLine(firstX, firstY, secondX, secondY) {
   context.strokeStyle = "black";
-  context.lineWidth = 10;
 
   context.beginPath();
   context.moveTo(secondX, secondY);
@@ -82,36 +117,21 @@ function exit() {
   isPainting = false;
   const slope = getSlope(origX, origY, finalX, finalY);
 
-  // deal with 0, 0 being at the top left of the viewport
-  const fakeCenterX = canvas.width/2;
-  const fakeOrigX = origX - fakeCenterX;
-  const fakeCenterY = canvas.height/2;
-  const fakeOrigY = fakeCenterY - origY;
-
-  // we have 9 "units" each above/below the midpoint, so a bit hacky
-  const heightUnit = canvas.height / 18;
-
-  context.font = fontSize + "px Arial";
-  context.strokeStyle = '#000000';
-  context.textAlign = 'center';
-
   // put the equation together
-  const yPoint = fakeOrigY - (slope * fakeOrigX);
-  const scaledYPoint = yPoint / heightUnit;
-
+  const yPoint = (origY + (slope * origX)) * -1;
 
   // draw out the linear line from equation
   snapToLinear();
 
-  const symbol = yPoint > 0 ? '+' : '-';
-  const equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(scaledYPoint.toFixed(0));
-  context.lineWidth = 4;
-  context.fillText(equation, canvas.width / 2, canvas.height * .85);
+  const symbol = yPoint >= 0 ? '+' : '-';
+  const equation = 'y = ' + slope + 'x ' + symbol + ' ' + Math.abs(yPoint.toFixed(2));
+  
+  document.querySelector('output[name=equation]').innerText = equation;
 }
 
 // get rid of the previous line drawn and equation generated
 function clearAll() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(-10, -10, 20, 20);
 }
 
 canvas.addEventListener('mousedown', startPaint);
