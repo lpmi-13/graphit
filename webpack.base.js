@@ -17,7 +17,7 @@ module.exports = {
       {
         test: /\.(png|jp(e*)g|svg)$/,
         use: [{
-          loader: "url-loader",
+          loader: "file-loader",
           options: {
             limit: 10000,
             name: "[name].[ext]",
@@ -27,7 +27,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          process.env.NODE_ENV !== 'production' ? "style-loader" : MiniCssExtractPlugin.loader,
+          "style-loader",
           "css-loader",
           "sass-loader",
         ],

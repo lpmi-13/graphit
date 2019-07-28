@@ -11,16 +11,6 @@ module.exports = merge(baseConfig, {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js",
   },
-  module: {
-    rules: [
-      {
-        test: /\.(png|jpg|gif)$/,
-        use: [
-          "file-loader?=name=[name].[ext]",
-        ],
-      },
-    ],
-  },
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
