@@ -1,46 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1000px" height="1001px" viewBox="0 0 1000 1001" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
-    <title>background</title>
-    <desc>Created with Sketch.</desc>
-    <g id="background" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(0.000000, 1.000000)">
-        <g id="Group" transform="translate(50.000000, 100.000000)">
-            <path id="Line-2" d="M28.5,397.5 L871.5,397.5 L871.5,385.5 L900.5,400 L871.5,414.5 L871.5,402.5 L28.5,402.5 L28.5,414.5 L-0.5,400 L28.5,385.5 L28.5,397.5 Z" fill="#FF5CC6" fill-rule="nonzero"></path>
-            <path d="M50,450 L850,450" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,500 L850,500" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,550 L850,550" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,600 L850,600" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,650 L850,650" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,700 L850,700" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,750 L850,750" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,800 L850,800" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,0.5 L850,0.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,50.5 L850,50.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,100.5 L850,100.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,150.5 L850,150.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,200.5 L850,200.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,250.5 L850,250.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,300.5 L850,300.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,350.5 L850,350.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-        </g>
-        <g id="Group" transform="translate(500.000000, 500.500000) rotate(90.000000) translate(-500.000000, -500.500000) translate(50.000000, 100.000000)">
-            <path id="Line-2" d="M28.5,397.5 L871.5,397.5 L871.5,385.5 L900.5,400 L871.5,414.5 L871.5,402.5 L28.5,402.5 L28.5,414.5 L-0.5,400 L28.5,385.5 L28.5,397.5 Z" fill="#FF5CC6" fill-rule="nonzero"></path>
-            <path d="M50,450 L850,450" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,500 L850,500" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,550 L850,550" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,600 L850,600" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,650 L850,650" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,700 L850,700" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,750 L850,750" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,800 L850,800" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,0.5 L850,0.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,50.5 L850,50.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,100.5 L850,100.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,150.5 L850,150.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,200.5 L850,200.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,250.5 L850,250.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,300.5 L850,300.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-            <path d="M50,350.5 L850,350.5" id="Line-2" stroke="#FF5CC6" stroke-width="3" stroke-linecap="square"></path>
-        </g>
-    </g>
+<svg width="1000" height="1001" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" fill-rule="evenodd">
+    <path fill="#FF5CC6" fill-rule="nonzero" d="M78.5 498.5h843v-12l29 14.5-29 14.5v-12h-843v12l-29-14.5 29-14.5v12z"/>
+    <path stroke="#FF5CC6" stroke-width="3" stroke-linecap="square" d="M100 551h800M100 601h800M100 651h800M100 701h800M100 751h800M100 801h800M100 851h800M100 901h800M100 101.5h800M100 151.5h800M100 201.5h800M100 251.5h800M100 301.5h800M100 351.5h800M100 401.5h800M100 451.5h800" />
+    <path fill="#FF5CC6" fill-rule="nonzero" d="M503 80v843h12l-14.5 29-14.5-29h12V80h-12l14.5-29L515 80h-12z"/>
+    <path stroke="#FF5CC6" stroke-width="3" stroke-linecap="square" d="M450.5 101.5v800M400.5 101.5v800M350.5 101.5v800M300.5 101.5v800M250.5 101.5v800M200.5 101.5v800M150.5 101.5v800M100.5 101.5v800M900 101.5v800M850 101.5v800M800 101.5v800M750 101.5v800M700 101.5v800M650 101.5v800M600 101.5v800M550 101.5v800" />
+  </g>
 </svg>
