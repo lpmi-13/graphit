@@ -1,25 +1,35 @@
 html,
 body,
 canvas {
-  height: 100%;
-  width: 100%;
   margin: 0;
   user-select: none;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif
 }
 
-span {
+h1 {
   position: absolute;
   user-select: none;
   font-size: 1.5rem;
   text-align: center;
   width: 100%;
+  z-index: 1;
+  font-weight: 400
+}
+
+output {
+  position: absolute;
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+  bottom: .5rem;
+  z-index: 1;
 }
 
 canvas {
-  background-image: url('background-graph.jpg');
+  background-image: url('../images/background-graph.svg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: 50% 50%;
   letter-spacing: .2rem;
   -webkit-text-size-adjust: 100%;
