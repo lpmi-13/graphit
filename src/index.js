@@ -108,7 +108,7 @@ function paint(e) {
 }
 
 function getSlope(startX, startY, endX, endY) {
-  const slope = (startY - endY) / (endX - startX);
+  const slope = - (startY - endY) / (endX - startX);
   return slope.toFixed(2);
 }
 
