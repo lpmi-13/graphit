@@ -16,10 +16,9 @@ module.exports = merge(baseConfig, {
                 parallel: true,
                 terserOptions: {
                     ecma: 6,
-                    compress: true, // You had this as false - typically want true in production
+                    compress: true,
                     mangle: true,
                 },
-                sourceMap: true, // Only if you need source maps
             }),
         ],
     },
