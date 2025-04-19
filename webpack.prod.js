@@ -1,36 +1,31 @@
-const webpack = require("webpack");
-const merge = require("webpack-merge");
-const baseConfig = require("./webpack.base.js");
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base.js');
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = merge(baseConfig, {
-  output: {
-    path: path.join(__dirname, "/dist"),
-    filename: "bundle.js",
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: false,
-          ecma: 6,
-          mangle: true,
-        },
-        sourceMap: true,
-      }),
+    mode: 'production',
+    output: {
+        path: path.join(__dirname, '/dist'),
+        filename: 'bundle.js',
+    },
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                parallel: true,
+                terserOptions: {
+                    ecma: 6,
+                    compress: true, // You had this as false - typically want true in production
+                    mangle: true,
+                },
+                sourceMap: true, // Only if you need source maps
+            }),
+        ],
+    },
+    plugins: [
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+        }),
     ],
-  },
-  plugins: [
-    new webpack.EnvironmentPlugin([
-      "NODE_ENV",
-    ]),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-    }),
-  ],
 });
