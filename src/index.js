@@ -1,8 +1,10 @@
-// Remove the import for the scss file
-// import style from './styles/app.scss';
+import backgroundImage from './images/background-graph.svg';
 
 // Add inline styles
 function applyStyles() {
+    document.querySelector(
+        'canvas'
+    ).style.backgroundImage = `url(${backgroundImage})`;
     // Create a style element
     const styleElement = document.createElement('style');
     styleElement.textContent = `
@@ -33,7 +35,6 @@ function applyStyles() {
     }
 
     canvas {
-      background-image: url('/src/images/background-graph.svg');
       background-repeat: no-repeat;
       background-size: contain;
       background-position: 50% 50%;
