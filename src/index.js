@@ -41,6 +41,84 @@ function applyStyles() {
       letter-spacing: .2rem;
       -webkit-text-size-adjust: 100%;
     }
+
+    .mode-selector {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-top: 3em;
+      margin-bottom: 20px;
+      z-index: 100;
+    }
+
+    .mode-selector .mode-option {
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .mode-selector .mode-option:first-child {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .mode-selector .mode-option:last-child {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    .mode-selector .mode-option.active {
+      background-color: #4285f4;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .mode-selector .mode-option:hover:not(.active) {
+      background-color: #e0e0e0;
+    }
+
+    .generate-btn {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .generate-btn:hover {
+      background-color: #45a049;
+    }
+
+    .generate-btn.visible {
+      opacity: 1;
+    }
+
+    .points-counter {
+      position: absolute;
+      bottom: 130px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #333;
+      z-index: 100;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .points-counter.visible {
+      opacity: 1;
+    }
   `;
 
     // Append the style element to the head
@@ -67,41 +145,83 @@ const headerText =
     document.querySelector('h1, h2, h3, header') ||
     document.querySelector('body > *:first-child');
 
-// Create toggle button container
-const toggleContainer = document.createElement('div');
-toggleContainer.style.position = 'relative';
-toggleContainer.style.textAlign = 'center';
-toggleContainer.style.marginTop = '3em';
-toggleContainer.style.marginBottom = '20px';
-toggleContainer.style.zIndex = '100';
+// Create mode selector container
+const modeSelector = document.createElement('div');
+modeSelector.className = 'mode-selector';
 
-const modeToggle = document.createElement('button');
-modeToggle.innerText = 'Switch to Quadratic Mode';
-modeToggle.style.padding = '8px 16px';
-modeToggle.style.borderRadius = '4px';
-modeToggle.style.cursor = 'pointer';
+// Create mode options
+const modes = ['Linear', 'Quadratic', 'Regression'];
+let currentMode = 'Linear'; // Default mode
 
-toggleContainer.appendChild(modeToggle);
+modes.forEach((mode) => {
+    const modeOption = document.createElement('div');
+    modeOption.className = 'mode-option';
+    modeOption.textContent = mode;
+    if (mode === currentMode) {
+        modeOption.classList.add('active');
+    }
 
-// Insert the toggle button after the header text
+    modeOption.addEventListener('click', () => {
+        // Update active state
+        document.querySelectorAll('.mode-option').forEach((option) => {
+            option.classList.remove('active');
+        });
+        modeOption.classList.add('active');
+
+        // Update current mode
+        currentMode = mode;
+
+        // Clear the canvas and equation
+        clearAll();
+        document.querySelector('output[name=equation]').innerText = '';
+
+        // Show/hide generate button based on mode
+        updateGenerateButtonVisibility();
+
+        // Reset regression points if switching away from regression mode
+        if (mode !== 'Regression') {
+            regressionPoints = [];
+            updatePointsCounter();
+        }
+    });
+
+    modeSelector.appendChild(modeOption);
+});
+
+// Insert the mode selector after the header text
 if (headerText) {
-    headerText.after(toggleContainer);
+    headerText.after(modeSelector);
 } else {
-    document.body.insertBefore(toggleContainer, document.body.firstChild);
+    document.body.insertBefore(modeSelector, document.body.firstChild);
 }
 
-// Keep track of current mode
-let isQuadraticMode = false;
+// Create generate button for regression mode
+const generateButton = document.createElement('button');
+generateButton.className = 'generate-btn';
+generateButton.textContent = 'Generate Best Fit Line';
+generateButton.addEventListener('click', generateRegressionLine);
+document.body.appendChild(generateButton);
 
-// Toggle between linear and quadratic modes
-modeToggle.addEventListener('click', () => {
-    isQuadraticMode = !isQuadraticMode;
-    modeToggle.innerText = isQuadraticMode
-        ? 'Switch to Linear Mode'
-        : 'Switch to Quadratic Mode';
-    clearAll();
-    document.querySelector('output[name=equation]').innerText = '';
-});
+// Create points counter for regression mode
+const pointsCounter = document.createElement('div');
+pointsCounter.className = 'points-counter';
+pointsCounter.textContent = 'Points: 0';
+document.body.appendChild(pointsCounter);
+
+function updateGenerateButtonVisibility() {
+    if (currentMode === 'Regression') {
+        generateButton.classList.add('visible');
+        pointsCounter.classList.add('visible');
+        updatePointsCounter();
+    } else {
+        generateButton.classList.remove('visible');
+        pointsCounter.classList.remove('visible');
+    }
+}
+
+function updatePointsCounter() {
+    pointsCounter.textContent = `Points: ${regressionPoints.length}`;
+}
 
 function resize() {
     // size the canvas to be a square that will fit in the middle of the page
@@ -142,6 +262,7 @@ let endPoint = { x: 0, y: 0 };
 let currentPoint = { x: 0, y: 0 };
 let points = [];
 let highestPoint = { x: 0, y: -Infinity };
+let regressionPoints = [];
 
 // Graph boundaries
 const graphBounds = {
@@ -172,6 +293,13 @@ function getCoordinates(event) {
 }
 
 function startPaint(e) {
+    // For regression mode, just add a point and don't start painting
+    if (currentMode === 'Regression') {
+        const point = getCoordinates(e);
+        addRegressionPoint(point);
+        return;
+    }
+
     isPainting = true;
     startPoint = getCoordinates(e);
     currentPoint = { ...startPoint };
@@ -182,8 +310,28 @@ function startPaint(e) {
     highestPoint = { ...startPoint };
 }
 
+function addRegressionPoint(point) {
+    // Check if the point is within bounds
+    if (
+        point.x >= graphBounds.minX &&
+        point.x <= graphBounds.maxX &&
+        point.y >= graphBounds.minY &&
+        point.y <= graphBounds.maxY
+    ) {
+        regressionPoints.push(point);
+
+        // Draw the point
+        context.fillStyle = 'blue';
+        context.beginPath();
+        context.arc(point.x, point.y, 0.2, 0, Math.PI * 2);
+        context.fill();
+
+        updatePointsCounter();
+    }
+}
+
 function paint(e) {
-    if (!isPainting) return;
+    if (currentMode === 'Regression' || !isPainting) return;
 
     const newPoint = getCoordinates(e);
 
@@ -199,7 +347,7 @@ function paint(e) {
     endPoint = { ...newPoint };
 
     // For quadratic mode, track points and find highest
-    if (isQuadraticMode) {
+    if (currentMode === 'Quadratic') {
         points.push({ ...newPoint });
 
         if (newPoint.y > highestPoint.y) {
@@ -209,9 +357,11 @@ function paint(e) {
 }
 
 function drawFinalEquation() {
+    if (currentMode === 'Regression') return;
+
     clearAll();
 
-    if (isQuadraticMode) {
+    if (currentMode === 'Quadratic') {
         const { a, b, c } = calculateQuadraticEquation();
         drawQuadraticCurve(a, b, c);
         displayQuadraticEquation(a, b, c);
@@ -223,6 +373,11 @@ function drawFinalEquation() {
 }
 
 function calculateLinearEquation() {
+    // If we only have one point or two points with same x value, avoid division by zero
+    if (startPoint.x === endPoint.x) {
+        return { slope: 0, yIntercept: startPoint.y };
+    }
+
     // Calculate slope: m = (y2 - y1) / (x2 - x1)
     const slope = (endPoint.y - startPoint.y) / (endPoint.x - startPoint.x);
 
@@ -235,7 +390,68 @@ function calculateLinearEquation() {
     };
 }
 
+function generateRegressionLine() {
+    if (regressionPoints.length < 2) {
+        alert('Please add at least 2 points for regression');
+        return;
+    }
+
+    const { slope, yIntercept } = calculateRegressionLine();
+    clearAll();
+
+    // Redraw all points
+    regressionPoints.forEach((point) => {
+        context.fillStyle = 'blue';
+        context.beginPath();
+        context.arc(point.x, point.y, 0.2, 0, Math.PI * 2);
+        context.fill();
+    });
+
+    // Draw the regression line
+    drawLinearLine(slope, yIntercept);
+    displayLinearEquation(slope, yIntercept);
+}
+
+function calculateRegressionLine() {
+    // Linear regression using least squares method
+    let sumX = 0;
+    let sumY = 0;
+    let sumXY = 0;
+    let sumX2 = 0;
+    let n = regressionPoints.length;
+
+    for (const point of regressionPoints) {
+        sumX += point.x;
+        sumY += point.y;
+        sumXY += point.x * point.y;
+        sumX2 += point.x * point.x;
+    }
+
+    // Calculate slope (m) using the formula:
+    // m = (n*Σ(xy) - Σx*Σy) / (n*Σ(x²) - (Σx)²)
+    const denominator = n * sumX2 - sumX * sumX;
+    let slope;
+
+    if (Math.abs(denominator) < 1e-10) {
+        // If denominator is close to zero, set a vertical line
+        slope = 0;
+    } else {
+        slope = (n * sumXY - sumX * sumY) / denominator;
+    }
+
+    // Calculate y-intercept (b) using the formula: b = (Σy - m*Σx) / n
+    const yIntercept = (sumY - slope * sumX) / n;
+
+    return {
+        slope: parseFloat(slope.toFixed(2)),
+        yIntercept: parseFloat(yIntercept.toFixed(2)),
+    };
+}
+
 function drawLinearLine(slope, yIntercept) {
+    context.strokeStyle = 'blue';
+    context.lineWidth = 0.3;
+
     // Find the x-coordinate where the line intersects y=minY and y=maxY
     const xAtMinY = (graphBounds.minY - yIntercept) / slope;
     const xAtMaxY = (graphBounds.maxY - yIntercept) / slope;
@@ -245,29 +461,35 @@ function drawLinearLine(slope, yIntercept) {
     const yAtMaxX = slope * graphBounds.maxX + yIntercept;
 
     // Choose the two points that are within the graph bounds
-    const points = [];
+    const linePoints = [];
 
-    if (xAtMinY >= graphBounds.minX && xAtMinY <= graphBounds.maxX) {
-        points.push({ x: xAtMinY, y: graphBounds.minY });
-    }
+    // Handle special case of vertical line (infinite slope)
+    if (!isFinite(slope) || Math.abs(slope) > 1000) {
+        linePoints.push({ x: startPoint.x, y: graphBounds.minY });
+        linePoints.push({ x: startPoint.x, y: graphBounds.maxY });
+    } else {
+        if (xAtMinY >= graphBounds.minX && xAtMinY <= graphBounds.maxX) {
+            linePoints.push({ x: xAtMinY, y: graphBounds.minY });
+        }
 
-    if (xAtMaxY >= graphBounds.minX && xAtMaxY <= graphBounds.maxX) {
-        points.push({ x: xAtMaxY, y: graphBounds.maxY });
-    }
+        if (xAtMaxY >= graphBounds.minX && xAtMaxY <= graphBounds.maxX) {
+            linePoints.push({ x: xAtMaxY, y: graphBounds.maxY });
+        }
 
-    if (yAtMinX >= graphBounds.minY && yAtMinX <= graphBounds.maxY) {
-        points.push({ x: graphBounds.minX, y: yAtMinX });
-    }
+        if (yAtMinX >= graphBounds.minY && yAtMinX <= graphBounds.maxY) {
+            linePoints.push({ x: graphBounds.minX, y: yAtMinX });
+        }
 
-    if (yAtMaxX >= graphBounds.minY && yAtMaxX <= graphBounds.maxY) {
-        points.push({ x: graphBounds.maxX, y: yAtMaxX });
+        if (yAtMaxX >= graphBounds.minY && yAtMaxX <= graphBounds.maxY) {
+            linePoints.push({ x: graphBounds.maxX, y: yAtMaxX });
+        }
     }
 
     // Draw the line between the two points that define the segment within bounds
-    if (points.length >= 2) {
+    if (linePoints.length >= 2) {
         context.beginPath();
-        context.moveTo(points[0].x, points[0].y);
-        context.lineTo(points[1].x, points[1].y);
+        context.moveTo(linePoints[0].x, linePoints[0].y);
+        context.lineTo(linePoints[1].x, linePoints[1].y);
         context.stroke();
     }
 }
@@ -395,6 +617,9 @@ function calculateSimpleQuadratic(start, end, apex) {
 }
 
 function drawQuadraticCurve(a, b, c) {
+    context.strokeStyle = 'green';
+    context.lineWidth = 0.3;
+
     context.beginPath();
 
     // Calculate the range of x-values where the parabola is within bounds
@@ -499,19 +724,23 @@ function clearAll() {
 }
 
 function exit() {
-    if (!isPainting) return;
+    if (currentMode === 'Regression' || !isPainting) return;
     isPainting = false;
     drawFinalEquation();
 }
 
 // Event listeners
 canvas.addEventListener('mousedown', function (e) {
-    clearAll();
+    if (currentMode !== 'Regression') {
+        clearAll();
+    }
     startPaint(e);
 });
 
 canvas.addEventListener('touchstart', function (e) {
-    clearAll();
+    if (currentMode !== 'Regression') {
+        clearAll();
+    }
     startPaint(e);
 });
 
@@ -521,3 +750,6 @@ canvas.addEventListener('touchmove', paint);
 canvas.addEventListener('mouseup', exit);
 canvas.addEventListener('mouseleave', exit);
 canvas.addEventListener('touchend', exit);
+
+// Initially hide the generate button
+updateGenerateButtonVisibility();
