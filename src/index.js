@@ -70,7 +70,7 @@ const headerText =
 const toggleContainer = document.createElement('div');
 toggleContainer.style.position = 'relative';
 toggleContainer.style.textAlign = 'center';
-toggleContainer.style.marginTop = '10px';
+toggleContainer.style.marginTop = '3em';
 toggleContainer.style.marginBottom = '20px';
 toggleContainer.style.zIndex = '100';
 
