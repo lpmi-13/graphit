@@ -103,22 +103,6 @@ function applyStyles() {
     .generate-btn.visible {
       opacity: 1;
     }
-
-    .points-counter {
-      position: absolute;
-      bottom: 130px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 14px;
-      color: #333;
-      z-index: 100;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .points-counter.visible {
-      opacity: 1;
-    }
   `;
 
     // Append the style element to the head
