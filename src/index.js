@@ -187,7 +187,6 @@ modes.forEach((mode) => {
         // Reset regression points if switching away from regression mode
         if (mode !== 'Regression') {
             regressionPoints = [];
-            updatePointsCounter();
         }
 
         // Reset the generated line flag when changing modes
@@ -225,25 +224,12 @@ generateButton.textContent = 'Generate Best Fit Line';
 generateButton.addEventListener('click', generateRegressionLine);
 document.body.appendChild(generateButton);
 
-// Create points counter for regression mode
-const pointsCounter = document.createElement('div');
-pointsCounter.className = 'points-counter';
-pointsCounter.textContent = 'Points: 0';
-document.body.appendChild(pointsCounter);
-
 function updateGenerateButtonVisibility() {
     if (currentMode === 'Regression') {
         generateButton.classList.add('visible');
-        pointsCounter.classList.add('visible');
-        updatePointsCounter();
     } else {
         generateButton.classList.remove('visible');
-        pointsCounter.classList.remove('visible');
     }
-}
-
-function updatePointsCounter() {
-    pointsCounter.textContent = `Points: ${regressionPoints.length}`;
 }
 
 function resize() {
@@ -322,7 +308,6 @@ function startPaint(e) {
         if (hasGeneratedRegressionLine) {
             clearAll();
             regressionPoints = [];
-            updatePointsCounter();
             hasGeneratedRegressionLine = false;
         }
 
@@ -357,8 +342,6 @@ function addRegressionPoint(point) {
         context.beginPath();
         context.arc(point.x, point.y, 0.2, 0, Math.PI * 2);
         context.fill();
-
-        updatePointsCounter();
     }
 }
 
