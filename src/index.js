@@ -63,7 +63,7 @@ function applyStyles() {
       position: relative;
       display: flex;
       justify-content: center;
-      margin-top: 3em;
+      margin-top: 5em;
       margin-bottom: 20px;
       z-index: 100;
     }
