@@ -1,10 +1,27 @@
 import backgroundImage from './images/background-graph.svg';
 
+// Immediately show we're loading
+document.documentElement.style.visibility = 'visible';
+
+// Apply visibility when everything is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Your existing applyStyles() function and other init code
+    applyStyles();
+
+    // When everything is ready, make the body visible
+    document.body.classList.add('visible');
+
+    // Rest of your existing initialization code...
+    resize();
+    updateGenerateButtonVisibility();
+    updateHeaderText();
+});
+
 // Add inline styles
 function applyStyles() {
-    document.querySelector(
-        'canvas'
-    ).style.backgroundImage = `url(${backgroundImage})`;
+    const canvas = document.querySelector('canvas');
+    canvas.style.backgroundImage = `url(${backgroundImage})`;
+
     // Create a style element
     const styleElement = document.createElement('style');
     styleElement.textContent = `

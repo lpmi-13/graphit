@@ -1,17 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta
+            name="description"
+            content="a simple drawing page to show equations from lines"
+        />
+        <meta name="author" content="Adam Leskis" />
+        <title>Graphit</title>
+        <style>
+            /* Critical CSS that hides everything until JS loads */
+            html,
+            body {
+                margin: 0;
+                height: 100%;
+                overflow: hidden;
+                font-family: Arial, Helvetica, sans-serif;
+            }
 
-    <meta name="description" content="a simple drawing page to show equations from lines">
-    <meta name="author" content="Adam Leskis">
-    <title>Graphit</title>
-  </head>
-  <body>
-    <h1>Draw a line and see the equation</h1>
-    <canvas></canvas>
-    <output name="equation"></output>
-  </body>
+            body {
+                visibility: hidden;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            body.visible {
+                visibility: visible;
+                opacity: 1;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Draw a line and see the equation</h1>
+        <canvas></canvas>
+        <output name="equation"></output>
+    </body>
 </html>
