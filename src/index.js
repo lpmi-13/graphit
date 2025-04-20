@@ -140,6 +140,11 @@ noScroll.addEventListener(
 const canvas = document.querySelector('canvas');
 const context = canvas.getContext('2d');
 
+// Add a flag to track if a regression line has been generated
+let hasGeneratedRegressionLine = false;
+
+hasGeneratedRegressionLine = false;
+
 // Get the existing header text
 const headerText =
     document.querySelector('h1, h2, h3, header') ||
@@ -177,16 +182,34 @@ modes.forEach((mode) => {
 
         // Show/hide generate button based on mode
         updateGenerateButtonVisibility();
+        updateHeaderText();
 
         // Reset regression points if switching away from regression mode
         if (mode !== 'Regression') {
             regressionPoints = [];
             updatePointsCounter();
         }
+
+        // Reset the generated line flag when changing modes
+        hasGeneratedRegressionLine = false;
     });
 
     modeSelector.appendChild(modeOption);
 });
+
+function updateHeaderText() {
+    const headerElement =
+        document.querySelector('h1, h2, h3, header') ||
+        document.querySelector('body > *:first-child');
+
+    if (headerElement) {
+        if (currentMode === 'Regression') {
+            headerElement.textContent = 'Plot some points and generate a line';
+        } else {
+            headerElement.textContent = 'Draw a line and see the equation';
+        }
+    }
+}
 
 // Insert the mode selector after the header text
 if (headerText) {
@@ -293,8 +316,17 @@ function getCoordinates(event) {
 }
 
 function startPaint(e) {
-    // For regression mode, just add a point and don't start painting
+    // For regression mode, handle points and reset logic
     if (currentMode === 'Regression') {
+        // If we already generated a regression line, clear everything and start fresh
+        if (hasGeneratedRegressionLine) {
+            clearAll();
+            regressionPoints = [];
+            updatePointsCounter();
+            hasGeneratedRegressionLine = false;
+        }
+
+        // Add the new point
         const point = getCoordinates(e);
         addRegressionPoint(point);
         return;
@@ -410,6 +442,9 @@ function generateRegressionLine() {
     // Draw the regression line
     drawLinearLine(slope, yIntercept);
     displayLinearEquation(slope, yIntercept);
+
+    // Set the flag to indicate we've generated a regression line
+    hasGeneratedRegressionLine = true;
 }
 
 function calculateRegressionLine() {
@@ -753,3 +788,5 @@ canvas.addEventListener('touchend', exit);
 
 // Initially hide the generate button
 updateGenerateButtonVisibility();
+
+updateHeaderText();
